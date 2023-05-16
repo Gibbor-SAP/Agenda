@@ -1,0 +1,14 @@
+C:\Users\sebas\source\repos\WinFormContacts\bin\Debug\WinFormContacts.exe.config
+C:\Users\sebas\source\repos\WinFormContacts\bin\Debug\WinFormContacts.exe
+C:\Users\sebas\source\repos\WinFormContacts\bin\Debug\WinFormContacts.pdb
+C:\Users\sebas\source\repos\WinFormContacts\obj\Debug\WinFormContacts.csproj.AssemblyReference.cache
+C:\Users\sebas\source\repos\WinFormContacts\obj\Debug\WinFormContacts.Contacts.resources
+C:\Users\sebas\source\repos\WinFormContacts\obj\Debug\WinFormContacts.Properties.Resources.resources
+C:\Users\sebas\source\repos\WinFormContacts\obj\Debug\WinFormContacts.csproj.GenerateResource.cache
+C:\Users\sebas\source\repos\WinFormContacts\obj\Debug\WinFormContacts.csproj.CoreCompileInputs.cache
+C:\Users\sebas\source\repos\WinFormContacts\obj\Debug\WinFormContacts.exe
+C:\Users\sebas\source\repos\WinFormContacts\obj\Debug\WinFormContacts.pdb
+C:\Users\sebas\source\repos\WinFormContacts\obj\Debug\WinFormContacts.ContactDetails.resources
+C:\Users\sebas\source\repos\WinFormContacts\bin\Debug\MySql.Data.dll
+C:\Users\sebas\source\repos\WinFormContacts\bin\Debug\MySql.Data.xml
+C:\Users\sebas\source\repos\WinFormContacts\obj\Debug\WinFormContacts.csproj.CopyComplete
