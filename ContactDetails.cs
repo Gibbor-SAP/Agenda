@@ -12,8 +12,9 @@ namespace WinFormContacts
 {  
     public partial class ContactDetails : Form
     {
-
+        //VARIABLES GLOBALES IDENTIFICADAS  CON _
         private BusinessLogicLayer _businessLogicLayer;
+        private Contact _contact; 
 
     
         public ContactDetails()
@@ -30,6 +31,8 @@ namespace WinFormContacts
        private void btnSave_Click(object sender, EventArgs e)
        {
             SaveContact();
+            this.Close();
+            ((Contacts)this.Owner).PopulateContacts(); // Se castea la función de control Parent citando la clase Contacts
        }
 
         private void SaveContact()
@@ -40,7 +43,33 @@ namespace WinFormContacts
             contact.Phone = txtPhone.Text;
             contact.Address = txtAddress.Text;
 
+            contact.id = _contact != null ? _contact.id : 0; //Si contact es distinto de null, se ejecuta el método, sino false
+
             _businessLogicLayer.SaveContact(contact);
+        }
+
+        public void LoadContact(Contact contact)
+        {
+            _contact = contact;
+            if (contact != null)
+            {
+                ClearForm(); // Antes de llenar las cajas de texto, tienen que estar vacías
+
+                txtFirtName.Text = contact.FirstName;
+                txtLastName.Text = contact.LastName;
+                txtPhone.Text = contact.Phone;
+                txtAddress.Text = contact.Address;
+
+            }
+        }
+
+        private void ClearForm()
+        {
+            txtFirtName.Text = string.Empty;
+            txtLastName.Text = string.Empty;
+            txtPhone.Text = string.Empty;
+            txtAddress.Text = string.Empty;
+
         }
     }
 }

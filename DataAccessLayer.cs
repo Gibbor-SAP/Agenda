@@ -57,7 +57,70 @@ namespace WinFormContacts
         
         }
 
-     public List<Contact> GetContacts()
+     public void UpdateContact(Contact contact)
+        {
+            try
+            {
+                conn.Open();
+                string query = @" UPDATE contacts
+                                    SET FirstName = @FirstName,
+                                        LastName = @LastName,
+                                        Phone = @Phone,
+                                        Address = @Address
+                                    WHERE id = @id";
+                MySqlParameter id = new MySqlParameter("@id", contact.id);
+                MySqlParameter firstName = new MySqlParameter("@FirstName", contact.FirstName);
+                MySqlParameter lastName = new MySqlParameter("@LastName", contact.LastName);
+                MySqlParameter phone = new MySqlParameter("@Phone", contact.Phone);
+                MySqlParameter address = new MySqlParameter("@Address", contact.Address);
+
+                MySqlCommand command = new MySqlCommand(query, conn);
+                command.Parameters.Add(id);
+                command.Parameters.Add(firstName);
+                command.Parameters.Add(lastName);
+                command.Parameters.Add(phone);
+                command.Parameters.Add(address);
+
+                command.ExecuteNonQuery();
+            }
+            catch (MySqlException e)
+            {
+                MessageBox.Show("Error" + e);
+                throw;
+            }
+            finally
+            {
+                conn.Close();
+            }
+        }
+
+     public void DeleteContact(int id)
+        {
+            try
+            {
+                conn.Open();
+                string query = @"DELETE FROM contacts WHERE id = @id ";
+
+                MySqlCommand command = new MySqlCommand(query, conn);
+                command.Parameters.Add(new MySqlParameter("@id", id));
+
+                command.ExecuteNonQuery();
+                MessageBox.Show("Contacto eliminado");
+
+            }
+            catch (MySqlException e)
+            {
+                MessageBox.Show("Error" + e);
+                throw;
+            }
+            finally
+            {
+                conn.Close();
+            }
+            
+        }
+
+     public List<Contact> GetContacts(string search = null)
         {
             List<Contact> contacts = new List<Contact>();
             try
@@ -66,8 +129,18 @@ namespace WinFormContacts
                 String query = @"SELECT Id, FirstName, LastName, Phone, Address
                                 FROM contacts ";
 
-                MySqlCommand command = new MySqlCommand(query, conn); 
-                
+                MySqlCommand command = new MySqlCommand();
+
+                if (!string.IsNullOrEmpty(search))
+                {
+                    query += @"WHERE FirstName LIKE @Search OR LastName LIKE @Search OR Phone LIKE @Search OR 
+                                Address LIKE @Search";
+                    command.Parameters.Add(new MySqlParameter("@Search", $"%{search}%"));
+                }
+
+                command.CommandText = query;
+                command.Connection = conn;
+                                
                 MySqlDataReader reader = command.ExecuteReader();
 
                 while (reader.Read()) //El método Read solo itera una vez, no vuelve a leer los datos.
@@ -81,7 +154,7 @@ namespace WinFormContacts
                         Address = reader["Address"].ToString()
                     });
                 }
-                MessageBox.Show("Todo marcha bien"); //---------------------->
+                //MessageBox.Show("Todo marcha bien"); //---------------------->
             }
             catch (MySqlException e)
             {
@@ -96,5 +169,6 @@ namespace WinFormContacts
         }
         
     }
+
 }
 

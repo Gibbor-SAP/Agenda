@@ -30,37 +30,42 @@ namespace WinFormContacts
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            this.GridContact = new System.Windows.Forms.DataGridView();
+            this.gridContact = new System.Windows.Forms.DataGridView();
             this.label1 = new System.Windows.Forms.Label();
             this.txtSearch = new System.Windows.Forms.TextBox();
             this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
             this.btnSearch = new System.Windows.Forms.Button();
             this.button1 = new System.Windows.Forms.Button();
-            this.contactBindingSource = new System.Windows.Forms.BindingSource(this.components);
+            this.Edit = new System.Windows.Forms.DataGridViewLinkColumn();
+            this.Delete = new System.Windows.Forms.DataGridViewLinkColumn();
             this.idDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.firstNameDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.lastNameDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.phoneDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.addressDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            ((System.ComponentModel.ISupportInitialize)(this.GridContact)).BeginInit();
+            this.contactBindingSource = new System.Windows.Forms.BindingSource(this.components);
+            ((System.ComponentModel.ISupportInitialize)(this.gridContact)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.contactBindingSource)).BeginInit();
             this.SuspendLayout();
             // 
-            // GridContact
+            // gridContact
             // 
-            this.GridContact.AutoGenerateColumns = false;
-            this.GridContact.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.GridContact.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.gridContact.AutoGenerateColumns = false;
+            this.gridContact.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.gridContact.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.idDataGridViewTextBoxColumn,
             this.firstNameDataGridViewTextBoxColumn,
             this.lastNameDataGridViewTextBoxColumn,
             this.phoneDataGridViewTextBoxColumn,
-            this.addressDataGridViewTextBoxColumn});
-            this.GridContact.DataSource = this.contactBindingSource;
-            this.GridContact.Location = new System.Drawing.Point(12, 67);
-            this.GridContact.Name = "GridContact";
-            this.GridContact.Size = new System.Drawing.Size(669, 258);
-            this.GridContact.TabIndex = 0;
+            this.addressDataGridViewTextBoxColumn,
+            this.Edit,
+            this.Delete});
+            this.gridContact.DataSource = this.contactBindingSource;
+            this.gridContact.Location = new System.Drawing.Point(12, 67);
+            this.gridContact.Name = "gridContact";
+            this.gridContact.Size = new System.Drawing.Size(708, 258);
+            this.gridContact.TabIndex = 0;
+            this.gridContact.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.gridContact_CellContentClick);
             // 
             // label1
             // 
@@ -78,21 +83,22 @@ namespace WinFormContacts
             this.txtSearch.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtSearch.Location = new System.Drawing.Point(74, 6);
             this.txtSearch.Name = "txtSearch";
-            this.txtSearch.Size = new System.Drawing.Size(435, 26);
+            this.txtSearch.Size = new System.Drawing.Size(468, 26);
             this.txtSearch.TabIndex = 2;
             // 
             // btnSearch
             // 
-            this.btnSearch.Location = new System.Drawing.Point(527, 6);
+            this.btnSearch.Location = new System.Drawing.Point(562, 6);
             this.btnSearch.Name = "btnSearch";
             this.btnSearch.Size = new System.Drawing.Size(74, 26);
             this.btnSearch.TabIndex = 3;
             this.btnSearch.Text = "Search";
             this.btnSearch.UseVisualStyleBackColor = true;
+            this.btnSearch.Click += new System.EventHandler(this.btnSearch_Click);
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(607, 6);
+            this.button1.Location = new System.Drawing.Point(642, 6);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(74, 26);
             this.button1.TabIndex = 4;
@@ -100,9 +106,21 @@ namespace WinFormContacts
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
-            // contactBindingSource
+            // Edit
             // 
-            this.contactBindingSource.DataSource = typeof(WinFormContacts.Contact);
+            this.Edit.HeaderText = "Edit";
+            this.Edit.Name = "Edit";
+            this.Edit.ReadOnly = true;
+            this.Edit.Text = "Edit";
+            this.Edit.UseColumnTextForLinkValue = true;
+            // 
+            // Delete
+            // 
+            this.Delete.HeaderText = "Delete";
+            this.Delete.Name = "Delete";
+            this.Delete.ReadOnly = true;
+            this.Delete.Text = "Delete";
+            this.Delete.UseColumnTextForLinkValue = true;
             // 
             // idDataGridViewTextBoxColumn
             // 
@@ -134,20 +152,24 @@ namespace WinFormContacts
             this.addressDataGridViewTextBoxColumn.HeaderText = "Address";
             this.addressDataGridViewTextBoxColumn.Name = "addressDataGridViewTextBoxColumn";
             // 
+            // contactBindingSource
+            // 
+            this.contactBindingSource.DataSource = typeof(WinFormContacts.Contact);
+            // 
             // Contacts
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(701, 333);
+            this.ClientSize = new System.Drawing.Size(799, 333);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.btnSearch);
             this.Controls.Add(this.txtSearch);
             this.Controls.Add(this.label1);
-            this.Controls.Add(this.GridContact);
+            this.Controls.Add(this.gridContact);
             this.Name = "Contacts";
             this.Text = "Contacts";
             this.Load += new System.EventHandler(this.Contacts_Load);
-            ((System.ComponentModel.ISupportInitialize)(this.GridContact)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.gridContact)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.contactBindingSource)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -156,18 +178,20 @@ namespace WinFormContacts
 
         #endregion
 
-        private System.Windows.Forms.DataGridView GridContact;
+        private System.Windows.Forms.DataGridView gridContact;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.TextBox txtSearch;
         private System.ComponentModel.BackgroundWorker backgroundWorker1;
         private System.Windows.Forms.Button btnSearch;
         private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.BindingSource contactBindingSource;
         private System.Windows.Forms.DataGridViewTextBoxColumn idDataGridViewTextBoxColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn firstNameDataGridViewTextBoxColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn lastNameDataGridViewTextBoxColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn phoneDataGridViewTextBoxColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn addressDataGridViewTextBoxColumn;
-        private System.Windows.Forms.BindingSource contactBindingSource;
+        private System.Windows.Forms.DataGridViewLinkColumn Edit;
+        private System.Windows.Forms.DataGridViewLinkColumn Delete;
     }
 }
 

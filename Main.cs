@@ -38,7 +38,7 @@ namespace WinFormContacts
         private void OpenContactDetailDialog()
         {
             ContactDetails contactDetails = new ContactDetails();
-            contactDetails.ShowDialog();
+            contactDetails.ShowDialog(this);
         }
 
         #endregion
@@ -48,11 +48,46 @@ namespace WinFormContacts
             PopulateContacts();
         }
 
-        private void PopulateContacts()
+        public void PopulateContacts(string searchText = null) //Al agregar el valor null al parámetro de una función, el parámetro es opcional 
         {
-            List<Contact> contacts = _businessLogicLayer.GetContacts(); // Se trae la lista al grid
-            GridContact.DataSource = contacts; // Se Muestran los Datos  en el grid
+            List<Contact> contacts = _businessLogicLayer.GetContacts(searchText); // Se trae la lista al grid
+            gridContact.DataSource = contacts; // Se Muestran los Datos  en el grid
 
+        }
+
+        private void gridContact_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+            DataGridViewLinkCell cell = (DataGridViewLinkCell)gridContact.Rows[e.RowIndex].Cells[e.ColumnIndex];
+
+            if (cell.Value.ToString() == "Edit")
+            {
+                ContactDetails contactDetails = new ContactDetails();
+                contactDetails.LoadContact(new Contact
+                {
+                    id = int.Parse(gridContact.Rows[e.RowIndex].Cells[0].Value.ToString()),
+                    FirstName = gridContact.Rows[e.RowIndex].Cells[1].Value.ToString(),
+                    LastName = gridContact.Rows[e.RowIndex].Cells[2].Value.ToString(),
+                    Phone = gridContact.Rows[e.RowIndex].Cells[3].Value.ToString(),
+                    Address = gridContact.Rows[e.RowIndex].Cells[4].Value.ToString(),
+                });
+                contactDetails.ShowDialog(this);
+            }
+            else if (cell.Value.ToString() == "Delete")
+            {
+                DeleteContact(int.Parse(gridContact.Rows[e.RowIndex].Cells[0].Value.ToString()));
+                PopulateContacts();
+            }
+            
+        }
+        private void DeleteContact(int id)
+        {
+            _businessLogicLayer.DeleteContact(id);
+        }
+
+        private void btnSearch_Click(object sender, EventArgs e)
+        {
+            PopulateContacts(txtSearch.Text);
+            txtSearch.Text = string.Empty;
         }
     }
 }

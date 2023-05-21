@@ -18,15 +18,20 @@ namespace WinFormContacts
         public Contact SaveContact(Contact contact)
         {
             if (contact.id == 0)
-                   _dataAccessLayer.InsertContact(contact);
-           //else
-          //  _dataAccessLayer.UpdateContact();
+                _dataAccessLayer.InsertContact(contact);
+            else
+                _dataAccessLayer.UpdateContact(contact);
 
             return contact;
         }
-        public List<Contact> GetContacts()
+        public List<Contact> GetContacts(string searchText = null)
         {
-            return _dataAccessLayer.GetContacts();
+            return _dataAccessLayer.GetContacts(searchText);
+        }
+
+        public void DeleteContact(int id)
+        {
+            _dataAccessLayer.DeleteContact(id);
         }
     }
 }
